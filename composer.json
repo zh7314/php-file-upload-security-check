@@ -1,0 +1,21 @@
+{
+    "name": "zx/php-file-upload-security-check",
+    "description": "php-file-upload-security-checkeck",
+    "type": "library",
+    "license": "mit",
+    "autoload": {
+        "psr-4": {
+            "Zx\\PhpFileUploadSecurityCheck\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "zx",
+            "email": "903464207@qq.com"
+        }
+    ],
+    "require": {
+        "php": ">=8.0"
+    },
+    "minimum-stability": "dev"
+}
