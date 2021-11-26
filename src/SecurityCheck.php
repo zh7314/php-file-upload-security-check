@@ -28,7 +28,6 @@ class SecurityCheck
         if (empty(self::$filePath)) {
             throw new \Exception('待检测文件路径不能为空');
         }
-//        print_r(self::$filePath);
         //判断文件是否存在，
         if (!file_exists(self::$filePath)) {
             throw new \Exception('待检测文件未找到');
@@ -66,12 +65,11 @@ class SecurityCheck
         if (!$isExist) {
             throw new \Exception('非允许mime types类型');
         }
-        $allType = $mimeTypes[$fileMimeType];
-        if (empty($allType)) {
+        if (empty($mimeTypes[$fileMimeType])) {
             throw new \Exception('基础数据丢失');
         }
 
-        if (!in_array($extension, $allType)) {
+        if (!in_array($extension, $mimeTypes[$fileMimeType])) {
             return false;
         } else {
             return true;
