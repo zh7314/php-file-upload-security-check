@@ -5,7 +5,7 @@ include_once './../src/MimeTypes.php';
 
 use Zx\PhpFileUploadSecurityCheck\SecurityCheck;
 
-$filePath = '111';
+$filePath = 'Makefile.pdf1';
 SecurityCheck::setFilePath($filePath);
 
 SecurityCheck::check();
