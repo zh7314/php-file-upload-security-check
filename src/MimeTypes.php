@@ -19,6 +19,18 @@ class MimeTypes
         ];
     }
 
+    public static function getPHPScript()
+    {
+        return [
+            'application/php' => ['php'],
+            'application/x-httpd-php' => ['php'],
+            'application/x-httpd-php-source' => ['php'],
+            'application/x-php' => ['php'],
+            'text/php' => ['php'],
+            'text/x-php' => ['php'],
+        ];
+    }
+
     public static function getImage()
     {
         return [

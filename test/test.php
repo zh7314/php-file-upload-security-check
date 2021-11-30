@@ -2,6 +2,7 @@
 
 include_once './../src/SecurityCheck.php';
 include_once './../src/MimeTypes.php';
+include_once './../src/ScriptRules.php';
 
 use Zx\PhpFileUploadSecurityCheck\SecurityCheck;
 
@@ -25,7 +26,6 @@ SecurityCheck::setFilePath($filePath);
 
 //var_dump(gd_info());
 
-SecurityCheck::checkImageFile();
-//PHP_EOL
+//SecurityCheck::checkImageFile();
 
-PHP_
+print_r(mime_content_type($filePath));

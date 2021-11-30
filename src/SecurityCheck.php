@@ -3,6 +3,7 @@
 namespace Zx\PhpFileUploadSecurityCheck;
 
 use Zx\PhpFileUploadSecurityCheck\MimeTypes;
+use Zx\PhpFileUploadSecurityCheck\ScriptRules;
 use SplFileObject;
 use Exception;
 
@@ -112,6 +113,10 @@ class SecurityCheck
     public static function checkPHPFile()
     {
         [$fileMimeType, $file] = self::getFileInfo();
+        $filePath = $file->getRealPath();
+        $extension = $file->getExtension();
+
+        $rules = ScriptRules::getRules();
 
     }
 }
