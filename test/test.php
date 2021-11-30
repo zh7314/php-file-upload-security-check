@@ -23,9 +23,8 @@ SecurityCheck::setFilePath($filePath);
 //    echo 'no';
 //}
 
-
-//var_dump(gd_info());
-
 //SecurityCheck::checkImageFile();
 
-print_r(mime_content_type($filePath));
+SecurityCheck::checkPHPFile();
+
+//print_r(mime_content_type($filePath));
