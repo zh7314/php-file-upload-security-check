@@ -5,8 +5,7 @@ namespace Zx\PhpFileUploadSecurityCheck;
 
 class MimeTypes
 {
-
-    public static function getData()
+    public static function getText()
     {
         return [
             'text/html' => ['html', 'htm', 'shtml'],
@@ -17,6 +16,12 @@ class MimeTypes
             'text/vnd.sun.j2me.app-descriptor' => ['jad'],
             'text/vnd.wap.wml' => ['wml'],
             'text/x-component' => ['htc'],
+        ];
+    }
+
+    public static function getImage()
+    {
+        return [
             'image/gif' => ['gif'],
             'image/jpeg' => ['jpeg', 'jpg'],
             'image/png' => ['png'],
@@ -27,6 +32,12 @@ class MimeTypes
             'image/x-ms-bmp' => ['bmp'],
             'image/svg+xml' => ['svg', 'svgz'],
             'image/webp' => ['webp'],
+        ];
+    }
+
+    public static function getApplication()
+    {
+        return [
             'application/javascript' => ['js'],
             'application/atom+xml' => ['atom'],
             'application/rss+xml' => ['rss'],
@@ -67,11 +78,23 @@ class MimeTypes
             'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => ['docx'],
             'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => ['xlsx'],
             'application/vnd.openxmlformats-officedocument.presentationml.presentation' => ['pptx'],
+        ];
+    }
+
+    public static function getAudio()
+    {
+        return [
             'audio/midi' => ['mi', 'dmidi', 'kar'],
             'audio/mpeg' => ['mp3'],
             'audio/ogg' => ['ogg'],
             'audio/x-m4a' => ['m4a'],
             'audio/x-realaudio' => ['ra'],
+        ];
+    }
+
+    public static function getVideo()
+    {
+        return [
             'video/3gpp' => ['3gpp', '3gp'],
             'video/mp2t' => ['ts'],
             'video/mp4' => ['mp4'],
@@ -84,8 +107,29 @@ class MimeTypes
             'video/x-ms-asf' => ['asx', 'asf'],
             'video/x-ms-wmv' => ['wmv'],
             'video/x-msvideo' => ['avi'],
+        ];
+    }
+
+    public static function getFont()
+    {
+        return [
             'font/ttf' => ['ttf'],
         ];
+    }
+
+    /**
+     * 获取所有的数据
+     */
+    public static function getData()
+    {
+        $text = self::getText();
+        $image = self::getImage();
+        $application = self::getApplication();
+        $audio = self::getAudio();
+        $video = self::getVideo();
+        $font = self::getFont();
+
+        return array_merge($text, $image, $application, $audio, $video, $font);
     }
 }
 
