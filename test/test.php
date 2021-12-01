@@ -2,17 +2,15 @@
 
 include_once './../src/SecurityCheck.php';
 include_once './../src/MimeTypes.php';
-include_once './../src/ScriptRules.php';
 
 use Zx\PhpFileUploadSecurityCheck\SecurityCheck;
 
 //$filePath = 'Makefile.pdf';
 //$filePath = 'Makefile.pdf1';
-//$filePath = '2.png';
+$filePath = '2.png';
 
 //php木马文件
-$filePath = 'phpmuma.jpg';
-
+//$filePath = 'muma.jpg';
 
 SecurityCheck::setFilePath($filePath);
 
@@ -25,6 +23,16 @@ SecurityCheck::setFilePath($filePath);
 
 //SecurityCheck::checkImageFile();
 
-SecurityCheck::checkPHPFile();
+//$r = SecurityCheck::checkPHPFile();
+//if ($r) {
+//    echo 'you';
+//} else {
+//    echo 'no';
+//}
 
-//print_r(mime_content_type($filePath));
+
+/*$str = '<?php ?> <? ?> <script /script> <% %> <?PHP ?> <SCRIPT /SCRIPT>';*/
+//$data =  hex2bin(SecurityCheck::strToHex($str));
+//file_put_contents('z11.png',$data);
+//print_r(mime_content_type('pp.png'));
+
