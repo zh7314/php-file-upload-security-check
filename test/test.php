@@ -7,7 +7,14 @@ use Zx\PhpFileUploadSecurityCheck\SecurityCheck;
 
 //$filePath = 'Makefile.pdf';
 //$filePath = 'Makefile.pdf1';
-$filePath = '2.png';
+//$filePath = '2.png';
+//$filePath = 'z11.png';
+$filePath = 'pp.png';
+//$filePath = '1.png';
+
+//$filePath = 'H13ca837b3d674dd4bd4a5a4131ea30dbd.jpg';
+//$filePath = 'image20211113143933GSCLQR.php';
+
 
 //php木马文件
 //$filePath = 'muma.jpg';
@@ -21,14 +28,20 @@ SecurityCheck::setFilePath($filePath);
 //    echo 'no';
 //}
 
-//SecurityCheck::checkImageFile();
-
-//$r = SecurityCheck::checkPHPFile();
-//if ($r) {
-//    echo 'you';
+//print_r(mime_content_type($filePath));
+//$res = SecurityCheck::checkImageFile();
+//if ($res) {
+//    echo 'ok';
 //} else {
 //    echo 'no';
 //}
+
+$r = SecurityCheck::checkPHPFile();
+if ($r) {
+    echo 'you';
+} else {
+    echo 'no';
+}
 
 
 /*$str = '<?php ?> <? ?> <script /script> <% %> <?PHP ?> <SCRIPT /SCRIPT>';*/

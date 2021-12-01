@@ -49,10 +49,12 @@ class SecurityCheck
      * 检查上传图片是否是图片文件
      * @throws Exception
      */
-    public static function checkImageFile()
+    public static function checkImageFile(array $mimeTypes = [])
     {
         [$fileMimeType, $file] = self::getFileInfo();
-        $mimeTypes = MimeTypes::getImage();
+        if (empty($mimeTypes)) {
+            $mimeTypes = MimeTypes::getImage();
+        }
 
         $isExist = array_key_exists($fileMimeType, $mimeTypes);
         if (!$isExist) {
@@ -61,7 +63,7 @@ class SecurityCheck
         if (empty($mimeTypes[$fileMimeType])) {
             throw new Exception('基础数据丢失');
         }
-        //通过基础的mime type验证之后
+//        //通过基础的mime type验证之后
         $extension = $file->getExtension();
 
         try {
@@ -82,12 +84,14 @@ class SecurityCheck
      * @return bool
      * @throws Exception
      */
-    public static function checkMimeTypeVsExtension()
+    public static function checkMimeTypeVsExtension(array $mimeTypes = [])
     {
         [$fileMimeType, $file] = self::getFileInfo();
 
         $extension = $file->getExtension();
-        $mimeTypes = MimeTypes::getData();
+        if (empty($mimeTypes)) {
+            $mimeTypes = MimeTypes::getData();
+        }
 
         $isExist = array_key_exists($fileMimeType, $mimeTypes);
         if (!$isExist) {
@@ -111,12 +115,14 @@ class SecurityCheck
      * 严格模式暂未实现,等有时间在添加
      * @throws Exception
      */
-    public static function checkPHPFile(bool $model = false)
+    public static function checkPHPFile(array $mimeTypes = [])
     {
         [$fileMimeType, $file] = self::getFileInfo();
 
         $extension = $file->getExtension();
-        $mimeTypes = MimeTypes::getPHPScript();
+        if (empty($mimeTypes)) {
+            $mimeTypes = MimeTypes::getPHPScript();
+        }
 
         $isExist = array_key_exists($fileMimeType, $mimeTypes);
         if ($isExist) {
