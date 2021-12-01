@@ -3,6 +3,10 @@
 #### 介绍
 php文件上传安全检测工具类
 
+####支持composer
+```
+composer require zx/php-file-upload-security-check
+```
 
 基础使用，检查
 
