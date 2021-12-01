@@ -3,13 +3,11 @@
 namespace Zx\PhpFileUploadSecurityCheck;
 
 use Zx\PhpFileUploadSecurityCheck\MimeTypes;
-use Zx\PhpFileUploadSecurityCheck\ScriptRules;
 use SplFileObject;
 use Exception;
 
 class SecurityCheck
 {
-
     //不用string 兼容更多的PHP版本
     protected static $filePath = '';
 
@@ -109,38 +107,82 @@ class SecurityCheck
     /**
      * 怀疑上传文件是否是php脚本文件
      * 注意：此操作比较耗时
+     * $model false为简单模式 true为严格模式 一般情况下简单模式即可，速度和安全是最为平衡的,
+     * 严格模式暂未实现,等有时间在添加
      * @throws Exception
      */
-    public static function checkPHPFile()
+    public static function checkPHPFile(bool $model = false)
     {
         [$fileMimeType, $file] = self::getFileInfo();
-//        $filePath = $file->getRealPath();
 
         $extension = $file->getExtension();
         $mimeTypes = MimeTypes::getPHPScript();
 
-//        print_r($mimeTypes);
-//        print_r($fileMimeType);
-//        die;
         $isExist = array_key_exists($fileMimeType, $mimeTypes);
         if ($isExist) {
             return true;
         }
-        if (empty($mimeTypes[$fileMimeType])) {
-            throw new Exception('基础数据丢失');
-        }
-        if (in_array($extension, $mimeTypes[$fileMimeType])) {
+        if ($extension == 'php') {
             return true;
         }
-        //通过正则匹配某些常用的特殊字符检测是否是可疑的特殊伪装文件
-        $rules = ScriptRules::getRules();
-
-        if (empty($rules)) {
-            throw new Exception('脚本检测规则不能为空');
+        //先判断文件内容是否是二进制
+        $file->rewind();
+        $data = '';
+        while (!$file->eof()) {
+            //读取一行，是否是二进制
+            $data .= bin2hex($file->fgets());
         }
+        return self::checkHex($data);
+    }
 
-        print_r($rules);
+    /**
+     * 大小写亦可
+     * 匹配16进制中的 <% %>
+     * 匹配16进制中的 <? ?>
+     * 匹配16进制中的 <script /script>
+     * 匹配16进制中的 <?php ?>
+     * 匹配16进制中的 <?PHP ?>
+     * 匹配16进制中的 <SCRIPT /SCRIPT>
+     * @param string $hexCode
+     * @return bool
+     */
+    public static function checkHex(string $hexCode)
+    {
+        $tt = preg_match("/3C3F706870|3F3E|3C3F|3C736372697074|2F7363726970743E|3C25|253E|3C3F504850|3C534352495054|2F5343524950543E/is", $hexCode);
+        if ($tt) {
+            //有恶意代码
+            return true;
+        } else {
+            return false;
+        }
+    }
 
+    /**
+     * 测试方法，正式环境不要用此方法
+     * 十六进制转字符串
+     * @param string $hex
+     * @return string
+     */
+    public static function hexToStr(string $hex)
+    {
+        $string = "";
+        for ($i = 0; $i < strlen($hex) - 1; $i += 2)
+            $string .= chr(hexdec($hex[$i] . $hex[$i + 1]));
+        return $string;
+    }
 
+    /**
+     * 测试方法，正式环境不要用此方法
+     * 字符串转十六进制
+     * @param string $string
+     * @return string
+     */
+    public static function strToHex(string $string)
+    {
+        $hex = "";
+        for ($i = 0; $i < strlen($string); $i++)
+            $hex .= dechex(ord($string[$i]));
+        $hex = strtoupper($hex);
+        return $hex;
     }
 }
